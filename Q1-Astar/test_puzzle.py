@@ -84,15 +84,16 @@ class TestPuzzle(TestCase):
 
     def test_createRigth(self):
 
-        leftChild = self.puzzle.createRigth()
-        self.assertEquals(2, abs(self.puzzle.h2n() - leftChild.h2n()))
+        righthChild = self.puzzle.createRigth()
+        self.assertEquals(2, abs(self.puzzle.h2n() - righthChild.h2n()))
 
     def test_createDown(self):
 
-        leftChild = self.puzzle.createDown()
-        self.assertEquals(2, abs(self.puzzle.h2n() - leftChild.h2n()))
+        downChid = self.puzzle.createDown()
+        self.assertEquals(2, abs(self.puzzle.h2n() - downChid.h2n()))
 
     def test_createUp(self):
-
+        zeroPos = self.puzzle.m_puzzleState[0]
         upChild = self.puzzle.createUp()
-        self.assertEquals(2, abs(self.puzzle.h2n() - upChild.h2n()))
+        zeroPosChild = upChild.m_puzzleState[0]
+        self.assertEquals(1, abs(zeroPosChild[0] - zeroPos[0]))

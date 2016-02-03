@@ -1,6 +1,10 @@
 from Puzzle import Puzzle
 from Node import Node
 
+def showPath():
+    print "lol"
+
+
 if __name__ == '__main__':
 
     puzzleArray = [2, 3, 7, 4, 5, 1, -1, 11, -1, 8, 6, 10, 0, 12, 15, 9, -1, 14, -1, 20, 13, 16, 17, 18, 19]
@@ -8,25 +12,46 @@ if __name__ == '__main__':
     blankPosition = (2, 2)
     darkHoles = [(1, 1), (1, 3), (3, 1), (3, 3)]
 
-    puzzle = Puzzle(puzzleArray, puzzleGoal,blankPosition, darkHoles)
+    puzzle = Puzzle(puzzleArray, puzzleGoal)
 
     closedSet = []
     openSet = []
-
+    startNode = Node(puzzle)
     openSet.append(Node(puzzle))
 
+    gScore = {}
+    fScore = {}
+    path = {}
+
+    startNode.m_g = 0                                               #already traveled
+    startNode.m_f = startNode.m_g + startNode.getEuristic()     #estimate + already traveled
+
     while len(openSet) > 0:
-        currentNode = min(openSet)
-        closedSet.append(currentNode)
-        openSet.remove(currentNode)
+        parentNode = min(openSet)
+        if parentNode.getPuzzle().checkGoal():
+            showPath()
 
-        if currentNode.getPuzzle().checkGoal():
-            break #traceback
+        openSet.remove(parentNode)
+        closedSet.append(parentNode)
 
-        sucessorsPuzzles = currentNode.getPuzzle().createSuccessors()
+        sucessorsPuzzles = parentNode.getPuzzle().createSuccessors()
+        sucessorNodes = []
+        for sucessor in sucessorsPuzzles:
+            sucessorNodes.append(Node(sucessor, parentNode))
+
+        for sucessor in sucessorNodes:
+            testGscore = startNode.m_g + 1
+            if sucessor in closedSet and testGscore >= sucessor.m_g:
+                continue
+
+            if sucessor not in closedSet or testGscore < sucessor.m_g:
+
+                #path[sucessor] = parentNode
+                sucessor.m_g = testGscore
+                sucessor.m_f = sucessor.m_g + sucessor.getEuristic()
+                if sucessor not in openSet:
+                    openSet.append(sucessor)
 
 
-        print "test"
-
-
+    print "Failure"
 
