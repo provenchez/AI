@@ -1,9 +1,6 @@
 from Puzzle import Puzzle
 from Node import Node
 
-def showPath():
-    print "lol"
-
 
 if __name__ == '__main__':
 
@@ -18,6 +15,7 @@ if __name__ == '__main__':
     openSet = []
     startNode = Node(puzzle)
     openSet.append(Node(puzzle))
+    startNode.m_open = 1
 
     gScore = {}
     fScore = {}
@@ -29,10 +27,13 @@ if __name__ == '__main__':
     while len(openSet) > 0:
         parentNode = min(openSet)
         if parentNode.getPuzzle().checkGoal():
-            showPath()
+            print "GOAL"
+            break
 
         openSet.remove(parentNode)
         closedSet.append(parentNode)
+        parentNode.m_closed = 1
+        parentNode.m_open = 0
 
         sucessorsPuzzles = parentNode.getPuzzle().createSuccessors()
         sucessorNodes = []
@@ -41,17 +42,18 @@ if __name__ == '__main__':
 
         for sucessor in sucessorNodes:
             testGscore = startNode.m_g + 1
-            if sucessor in closedSet and testGscore >= sucessor.m_g:
+            if sucessor.m_closed == 1 and testGscore >= sucessor.m_g:
                 continue
 
-            if sucessor not in closedSet or testGscore < sucessor.m_g:
+            if sucessor.m_closed == 0:
 
                 #path[sucessor] = parentNode
                 sucessor.m_g = testGscore
                 sucessor.m_f = sucessor.m_g + sucessor.getEuristic()
-                if sucessor not in openSet:
+                if sucessor.m_open == 0:
                     openSet.append(sucessor)
-
+                    sucessor.m_open = 1
+                    print sucessor.getPuzzle().m_blankPosition
 
     print "Failure"
 

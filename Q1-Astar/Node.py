@@ -8,6 +8,8 @@ class Node:
     m_parent = 0
     m_g = 0
     m_f = 0
+    m_closed = 0
+    m_open = 0
 
     def __init__(self, puzzle, parent = None):
         self.m_heuristic = puzzle.h2n()
