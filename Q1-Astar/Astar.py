@@ -2,6 +2,22 @@ from Puzzle import Puzzle
 from Node import Node
 
 
+def printPath(node):
+    print node.getPuzzle().m_blankPosition
+    while isinstance(node.m_parent, Node):
+        node = node.m_parent
+        if(node.getPuzzle().m_blankPosition) == (4,2):
+            print "6ieme etape\n"
+            print node.getPuzzle().m_puzzleState
+
+        elif(node.getPuzzle().m_blankPosition) == (2,0):
+            print "6ieme a partir de la fin \n"
+            print node.getPuzzle().m_puzzleState
+
+        else:
+            print node.getPuzzle().m_blankPosition
+
+
 if __name__ == '__main__':
 
     puzzleArray = [2, 3, 7, 4, 5, 1, -1, 11, -1, 8, 6, 10, 0, 12, 15, 9, -1, 14, -1, 20, 13, 16, 17, 18, 19]
@@ -27,7 +43,7 @@ if __name__ == '__main__':
     while len(openSet) > 0:
         parentNode = min(openSet)
         if parentNode.getPuzzle().checkGoal():
-            print "GOAL"
+            printPath(parentNode)
             break
 
         openSet.remove(parentNode)
@@ -53,7 +69,5 @@ if __name__ == '__main__':
                 if sucessor.m_open == 0:
                     openSet.append(sucessor)
                     sucessor.m_open = 1
-                    print sucessor.getPuzzle().m_blankPosition
 
-    print "Failure"
-
+print "nombre d'etats explores : " + str(len(closedSet))
