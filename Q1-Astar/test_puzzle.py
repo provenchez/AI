@@ -8,8 +8,8 @@ class TestPuzzle(TestCase):
     puzzle = Puzzle(puzzleArray,puzzleGoal)
 
     def test_validateArray(self):
-        self.puzzle.validateArray(puzzleArray)
-        self.puzzle.validateArray(puzzleGoal)
+        self.puzzle._validateArray(puzzleArray)
+        self.puzzle._validateArray(puzzleGoal)
 
     def test_Puzzle(self):
         blankPosition = (2, 2)
