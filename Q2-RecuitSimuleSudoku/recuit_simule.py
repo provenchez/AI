@@ -1,4 +1,7 @@
 from Node import Node
+from sudoku import Sudoku
+import random
+import math
 
 class RecuitSimule():
 
@@ -13,21 +16,31 @@ class RecuitSimule():
 
     def simulate(self):
 
-        currentNode = Node(self.m_sudokuProblem)
-        found = True
+        currentNode = Node(Sudoku(self.m_sudokuProblem))
+        found = False
 
         while not found:
             self.m_temperature = self.scheduleTemp()
 
             if self.m_temperature == 0:
-                return currentNode
+                found = True
 
-            nextNode = currentNode.getSucessor()
+            nextNode = currentNode.getRandomSucessor()
 
-            if (nextNode.getValue() - currentNode.getValue()) > 0:
+            deltaE = nextNode.getValue() - currentNode.getValue()
+
+            probability = self.getProbability(deltaE)
+            if random.random() < probability:
                 currentNode = nextNode
+
+
+        return currentNode
+
+    def getProbability(self, deltaE):
+        probability = math.e**(deltaE/self.m_temperature)
+        return probability
 
 
 
     def scheduleTemp(self):
-        return 1
+        return self.m_temperature - 0.1
