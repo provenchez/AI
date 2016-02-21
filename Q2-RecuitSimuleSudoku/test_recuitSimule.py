@@ -31,14 +31,32 @@ class TestRecuitSimule(TestCase):
                     [8, 9, 7,     2, 4, 5,     3, 6, 1],
                 ]
 
+    m_sudokuArrayEvil = [
+                    [-1, 3, -1,     5, -1, -1,     -1, -1, -1],
+                    [-1, -1, -1,    -1, -1, -1,    4, -1, 8],
+                    [-1, -1, -1,    -1, -1, -1,    -1, 2, -1],
+
+                    [9, -1, 8,      -1, -1, -1,     -1, -1, -1],
+                    [-1, -1, -1,    1, -1, -1,      -1, 7, -1],
+                    [4, -1, -1,     -1, -1, -1,     -1, -1, -1],
+
+                    [-1, 7, -1,     -1, -1, -1,     1, 5, -1],
+                    [-1, -1, -1,     6, -1, -1,     3, -1, -1],
+                    [-1, -1, -1,     -1, 8, 4,     -1, -1, -1],
+                ]
+
+    m_fixedNodes    = [(0,1),(0,3),(1,6),(1,8),(2,7),(3,0),(3,2),(4,3),(4,7),(5,0),(6,1),(6,6),(6,7),(7,3),(7,6),(8,4),(8,5)]
+    m_fixedNodesEvil = [(0,1),(0,3),(1,6),(1,8),(2,7),(3,0),(3,2),(4,3),(4,7),(5,0),(6,1),(6,6),(6,7),(7,3),(7,6),(8,4),(8,5)]
+
 
     m_temperature = 810
 
-    recuitSimule = RecuitSimule(m_sudokuArray, m_sudokuArrayGoal, m_temperature)
+    recuitSimule = RecuitSimule(m_sudokuArrayEvil, m_fixedNodesEvil, m_temperature)
 
     def test_simulate(self):
         solution = self.recuitSimule.simulate()
-        print solution
+        solution.show()
+        print "FUCKING FOUND"
 
 
     def test_probability(self):

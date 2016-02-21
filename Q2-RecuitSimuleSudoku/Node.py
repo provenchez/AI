@@ -13,3 +13,6 @@ class Node:
     def getValue(self):
         return self.m_sudoku.getValue()
 
+    def show(self):
+        self.m_sudoku.show()
+
